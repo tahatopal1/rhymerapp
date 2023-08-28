@@ -1,0 +1,13 @@
+.table-row {
+  flex: 0 0 6rem;
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 1.6rem 0 4.8rem rgba(0, 0, 0, 0.1),
+    -0.4rem 0 1.2rem rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.table-body .table-row:hover {
+  background-color: #f9f5f5c2;
+}

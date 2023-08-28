@@ -1,0 +1,11 @@
+.main-content {
+  overflow: hidden;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.radius {
+  border-radius: 30px;
+}

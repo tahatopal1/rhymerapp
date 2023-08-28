@@ -1,0 +1,19 @@
+.tags-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: 0.4rem;
+  min-width: 6rem;
+  border-radius: 15px;
+  text-align: center;
+  font-weight: 600;
+  background-color: cadetblue;
+  color: #fff;
+}

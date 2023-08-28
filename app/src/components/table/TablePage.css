@@ -1,0 +1,132 @@
+.table-container {
+  font-size: 1.6rem;
+  font-weight: 400;
+  flex: 0 0 88%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.pagination-container {
+  flex: 0 0 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  flex: 0 0 30%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  user-select: none;
+}
+
+.pagination-page-button {
+  height: 100%;
+  border-radius: 10px;
+  flex: 0 0 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  padding: 0 0.4rem;
+  cursor: pointer;
+}
+
+.pagination-page-button:hover {
+  color: cadetblue;
+}
+
+.page-input {
+  height: 100%;
+  border-radius: 10px;
+  flex: 0 0 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  padding: 0 0.4rem;
+  width: 1rem;
+  text-align: center;
+}
+
+.table-utility-container {
+  display: flex;
+  padding: 1.2rem 0;
+  flex: 0 0 10%;
+  gap: 1.2rem;
+  justify-content: center;
+  box-shadow: 0 0 4.8rem rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 19.5%;
+  height: 100%;
+  gap: 0.4rem;
+}
+
+.input-container select,
+.input-container input {
+  height: 4rem;
+  font-size: 1.4rem;
+  font-family: "Rubik", sans-serif;
+  padding: 0 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #555;
+  outline: none;
+}
+
+.input-action-container {
+  display: flex;
+  height: 80%;
+  flex: 0 0 15%;
+  justify-content: space-evenly;
+  align-items: center;
+  align-self: flex-end;
+}
+
+.input-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  flex: 0 0 4rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+}
+
+.input-action:hover {
+  background-color: #555;
+}
+
+.input-action-selected {
+  background-color: #fff;
+  color: goldenrod;
+  border: 1px solid #333;
+}
+
+.input-action-selected:hover {
+  background-color: #fff;
+}
+
+.input-title {
+  font-size: 1.6rem;
+}
+
+.passive,
+.passive:hover {
+  color: #999;
+}
+
+.page-submit-button {
+  display: none;
+}

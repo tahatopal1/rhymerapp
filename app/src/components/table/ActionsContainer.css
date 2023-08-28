@@ -1,0 +1,27 @@
+.actions-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.action {
+  flex: 0 0 3.2rem;
+  height: 3.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.action:nth-child(1):hover .icon {
+  color: cadetblue;
+}
+
+.action:nth-child(2):hover .icon {
+  color: goldenrod;
+}
+
+.action:nth-child(3):hover .icon {
+  color: rgb(247, 94, 94);
+}

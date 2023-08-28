@@ -1,0 +1,16 @@
+.lyrics-mini-table {
+  flex: 0 0 40%;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 0.8rem 0.4rem 4.8rem;
+  background-color: #eee;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  position: relative;
+}
+
+.lyrics-mini-table-dragged {
+  background-color: #d6d6d6;
+}

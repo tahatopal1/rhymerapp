@@ -1,0 +1,29 @@
+{
+  "name": "electronapp",
+  "version": "0.0.1",
+  "description": "Rhyme App",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dev:watch": "npx electronmon --trace-warnings ."
+  },
+  "keywords": [
+    "electron",
+    "reactjs"
+  ],
+  "author": "Taha Topal",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.3",
+    "electron": "^22.0.0",
+    "form-data": "^4.0.0",
+    "sqlite3": "^5.1.6"
+  },
+  "electronmon": {
+    "patterns": [
+      "!node_modules/**",
+      "!app/node_modules/**"
+    ]
+  }
+}

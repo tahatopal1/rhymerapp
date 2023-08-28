@@ -1,0 +1,10 @@
+.lyrics-toolbar {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 90%;
+  padding: 1rem;
+  gap: 1rem;
+  border-radius: 10px;
+  user-select: none;
+  background-color: #fff;
+}

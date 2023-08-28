@@ -1,0 +1,20 @@
+.mini-table-item {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 1.6rem 0 4.8rem rgb(0 0 0 / 10%),
+    -0.4rem 0 1.2rem rgb(0 0 0 / 10%);
+  padding: 1rem;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.mini-table-item:hover {
+  background-color: #f9f5f5c2 !important;
+}
+
+.mini-table-item-dragged {
+  background-color: #bfd8d9;
+}
