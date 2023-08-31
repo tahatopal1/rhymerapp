@@ -4,7 +4,7 @@ import LyricsMiniTable from "./LyricsMiniTable";
 import LyricsTextArea from "./LyricsTextArea";
 import LyricsSideActions from "./LyricsSideActions";
 
-const LyricsToolbar = () => {
+const LyricsToolbar = (props) => {
   const [lyricsRows, setLyricsRows] = useState([]);
 
   const handleDragOver = (e) => {
@@ -55,6 +55,7 @@ const LyricsToolbar = () => {
         onRefresh={() => {
           setLyricsRows([]);
         }}
+        onImport={props.onImport}
       />
     </div>
   );

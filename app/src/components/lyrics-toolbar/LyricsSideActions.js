@@ -1,7 +1,69 @@
-import React from "react";
+import React, { useCallback } from "react";
+import * as XLSX from "xlsx";
 import "./LyricsSideActions.css";
 
 const LyricsSideActions = (props) => {
+  const electron = window.electron;
+
+  function readAsBinaryString(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsBinaryString(file);
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+    });
+  }
+
+  const handleFileUpload = useCallback(async (e) => {
+    const file = e.target.files[0];
+    let allRows = [];
+
+    if (file && file.name.endsWith(".xlsx")) {
+      try {
+        // Using await here with the promisified function
+        const binaryData = await readAsBinaryString(file);
+
+        // Read the Excel File data
+        const wb = XLSX.read(binaryData, { type: "binary" });
+
+        // Loop Over Each Sheet
+        for (const sheetName of wb.SheetNames) {
+          const sheet = wb.Sheets[sheetName];
+          const rowObj = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+          // Collect rows in a temporary array
+          allRows = [...allRows, ...rowObj];
+        }
+
+        allRows = allRows.slice(1); // Remove the header row if needed
+
+        for (const element of allRows) {
+          if (Number.isFinite(element[1])) {
+            await electron.insertLyric(
+              element[0],
+              element[1],
+              element[2].replaceAll(" ", "").toLowerCase().split(",")
+            );
+          }
+        }
+
+        // Clearing the file input value to allow re-uploads
+        e.target.value = null;
+
+        // Trigger any additional action
+        props.onImport();
+      } catch (error) {
+        console.error("An error occurred while reading the file:", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="lyrics-side-actions">
       <button onClick={props.onRefresh}>
@@ -42,7 +104,7 @@ const LyricsSideActions = (props) => {
           <p>Backup</p>
         </div>
       </button>
-      <button className="import-button">
+      <button className="import-button" style={{ position: "relative" }}>
         <div className="lyrics-side-action-content">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +112,7 @@ const LyricsSideActions = (props) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="side-action-icon "
+            className="side-action-icon"
           >
             <path
               strokeLinecap="round"
@@ -59,6 +121,12 @@ const LyricsSideActions = (props) => {
             />
           </svg>
           <p>Import Excel</p>
+          <input
+            type="file"
+            accept=".csv, .xlsx"
+            className="file-input"
+            onChange={handleFileUpload}
+          />
         </div>
       </button>
     </div>

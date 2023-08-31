@@ -22,7 +22,7 @@ const LyricsTextArea = (props) => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          class="icon"
+          className="icon"
         >
           <path
             strokeLinecap="round"

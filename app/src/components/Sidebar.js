@@ -8,7 +8,7 @@ const Sidebar = (props) => {
       <div className="img-container">
         <img src={props.logo} />
       </div>
-      <LyricsToolbar />
+      <LyricsToolbar onImport={props.onImport} />
     </div>
   );
 };

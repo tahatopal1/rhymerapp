@@ -124,10 +124,47 @@ contextBridge.exposeInMainWorld("electron", {
       ]);
     });
   },
+  insertTag: async (tagName) => {
+    try {
+      const db = await connectDb();
+      await runAsync(`INSERT INTO tags(tagname) VALUES (?)`, db, [tagName]);
+    } catch (err) {
+      return { error: err.message };
+    }
+  },
   queryTags: async () => {
     const db = await connectDb();
     let rows = await queryAsync(`SELECT * FROM tags`, db);
     return rows.map((tag) => tag.tagname);
+  },
+  deleteTagByName: async (tagName) => {
+    const db = await connectDb();
+    let rows = await queryAsync(`SELECT * FROM tags WHERE tagname = ?`, db, [
+      tagName,
+    ]);
+    await runAsync(`DELETE FROM lyrics_tags WHERE tag_id = ?`, db, [
+      rows[0].id,
+    ]);
+    await runAsync(`DELETE FROM tags WHERE id = ?`, db, [rows[0].id]);
+  },
+  updateTagByName: async (tagName, nTagName) => {
+    const db = await connectDb();
+    let rows = await queryAsync(`SELECT * FROM tags WHERE tagname = ?`, db, [
+      tagName,
+    ]);
+    if (rows.length > 0) {
+      let guardCaseRows = await queryAsync(
+        `SELECT * FROM tags WHERE tagname = ?`,
+        db,
+        [nTagName]
+      );
+      if (guardCaseRows.length === 0) {
+        await runAsync(`UPDATE tags SET tagname = ? WHERE id = ?`, db, [
+          nTagName,
+          rows[0].id,
+        ]);
+      }
+    }
   },
   totalLyricsCount: async (key, syllable, endsWith, tag = "", favorite) => {
     const db = await connectDb();

@@ -4,11 +4,13 @@ import TableActionButton from "./TableActionButton";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import "./TablePage.css";
+import TagModal from "../modal/TagModal";
 
 const TablePage = (props) => {
   const electron = window.electron;
 
   const [modal, setModal] = useState(false);
+  const [tagModal, setTagModal] = useState(false);
   const [lyricTags, setLyricTags] = useState([]);
   const [lyricRecords, setLyricRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,6 +51,9 @@ const TablePage = (props) => {
   const showModalHandler = () => setModal(true);
   const closeModalHandler = () => setModal(false);
 
+  const showTagModalHandler = () => setTagModal(true);
+  const closeTagModalHandler = () => setTagModal(false);
+
   const arrangeUpdateModalHandler = (updateInfo) => {
     setIsUpdating(true);
     setUpdatingInformation(updateInfo);
@@ -83,6 +88,7 @@ const TablePage = (props) => {
           forward: false,
           fullForward: false,
         });
+        setCurrentPage(1);
       }
 
       if (lPage > 1) {
@@ -145,22 +151,31 @@ const TablePage = (props) => {
     searchedEndsWith,
     searchedTag,
     favoritesSelected,
+    props.wideDummy,
   ]);
 
   useEffect(() => {
     const fetchTagsData = async () => {
       try {
         let response = await electron.queryTags();
-        setLyricTags(response);
+        setLyricTags(response.sort());
       } catch (error) {
         console.error("There was an error fetching the data:", error);
       }
     };
     fetchTagsData();
-  }, [dummyPlaceholder]);
+  }, [dummyPlaceholder, props.wideDummy]);
 
   return (
     <React.Fragment>
+      {tagModal && (
+        <TagModal
+          onCloseModal={closeTagModalHandler}
+          onConfirm={() => {
+            setDummyPlaceholder((dummy) => ({ ...dummy }));
+          }}
+        />
+      )}
       {modal && (
         <Modal
           onConfirm={() => {
@@ -185,7 +200,17 @@ const TablePage = (props) => {
             showModalHandler();
           }}
           className="add-button"
-          svgData="M12 4.5v15m7.5-7.5h-15"
+          svgData={["M12 4.5v15m7.5-7.5h-15"]}
+        />
+        <TableActionButton
+          onClick={() => {
+            showTagModalHandler();
+          }}
+          className="tags-button"
+          svgData={[
+            "M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z",
+            "M6 6h.008v.008H6V6z",
+          ]}
         />
         <TableHead />
         <TableBody
@@ -259,7 +284,6 @@ const TablePage = (props) => {
                 type="number"
                 className="page-input"
                 defaultValue={1}
-                // value={currentPage}
                 ref={paginationInput}
                 min={1}
                 max={lastPage}

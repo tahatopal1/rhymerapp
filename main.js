@@ -49,7 +49,7 @@ const createDB = async () => {
         db
       );
       await runAsync(
-        `CREATE TABLE IF NOT EXISTS tags(id INTEGER PRIMARY KEY, tagname TEXT);`,
+        `CREATE TABLE IF NOT EXISTS tags(id INTEGER PRIMARY KEY, tagname TEXT UNIQUE);`,
         db
       );
       await runAsync(`INSERT INTO tags(tagname) VALUES ('cool');`, db);

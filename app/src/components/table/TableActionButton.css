@@ -1,5 +1,5 @@
 .add-button,
-.lyrics-button {
+.tags-button {
   width: 5.2rem;
   height: 5.2rem;
   border-radius: 50%;
@@ -15,12 +15,12 @@
   cursor: pointer;
 }
 
-.lyrics-button {
+.tags-button {
   left: 2rem;
   background-color: #c486ed;
 }
 
-.lyrics-button:hover {
+.tags-button:hover {
   background-color: #9d6bbe;
 }
 

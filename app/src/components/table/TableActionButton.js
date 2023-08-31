@@ -12,7 +12,14 @@ const TableActionButton = (props) => {
         stroke="currentColor"
         className="icon"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" d={props.svgData} />
+        {props.svgData.map((data) => (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d={data}
+            key={data}
+          />
+        ))}
       </svg>
     </div>
   );

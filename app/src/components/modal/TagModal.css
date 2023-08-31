@@ -1,0 +1,110 @@
+.tag-modal {
+  position: fixed;
+  top: 25rem;
+  left: 30%;
+  z-index: 100;
+  display: flex;
+  width: 60rem;
+  height: 40rem;
+  border-radius: 10px;
+  flex-direction: column;
+  user-select: none;
+  background-color: #fff;
+  outline: none;
+}
+
+.tag-modal-header {
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background-color: #aaa;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.input-tag-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.input-tag-container input {
+  outline: none;
+  font-family: "Rubik", sans-serif;
+  height: 3.6rem;
+  border-radius: 10px;
+  border: 1px solid #555;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding-left: 0.8rem;
+  padding-right: 7.4rem;
+}
+
+.tag-modal-content {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  gap: 3rem;
+  flex-grow: 0;
+  max-height: 36rem;
+  overflow: hidden;
+}
+
+.tag-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 20rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-radius: 10px;
+  background-color: #eee;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 1rem;
+  flex-grow: 0;
+}
+
+.tag-modal-input-text {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.tag-modal-header p {
+  font-size: 2rem;
+}
+
+.tag-input-icon {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  right: 3.6rem;
+  top: 9.9rem;
+  z-index: 99;
+  cursor: pointer;
+}
+
+.tag-title {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+}
+
+.tag-input-icon:hover {
+  color: #317b11;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+.close-icon:hover {
+  color: #555;
+}

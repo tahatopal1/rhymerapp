@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 import "./Modal.css";
-
-const Backdrop = () => {
-  return <div className="backdrop" />;
-};
+import Backdrop from "./Backdrop";
 
 const ModalOverlay = (props) => {
   const electron = window.electron;

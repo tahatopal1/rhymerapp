@@ -42,3 +42,13 @@
 .import-button:hover {
   background-color: #4c7e80 !important;
 }
+
+.file-input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
