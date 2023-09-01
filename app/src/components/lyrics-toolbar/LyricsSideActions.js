@@ -64,6 +64,28 @@ const LyricsSideActions = (props) => {
     }
   }, []);
 
+  const handleBackup = async () => {
+    let response = await electron.queryLyrics("", "", "", 1, "", "", false);
+    const responseDerived = response.map((res) => ({
+      sentence: res.sentence,
+      syllable: res.syllable,
+      tags: res.tags.join(","),
+    }));
+
+    const wb = XLSX.utils.book_new();
+
+    /* Create a worksheet */
+    const ws = XLSX.utils.json_to_sheet(responseDerived, {
+      header: ["sentence", "syllable", "tags"], // Specify the headers if you want
+    });
+
+    /* Add the worksheet to the workbook */
+    XLSX.utils.book_append_sheet(wb, ws, "Lyrics");
+
+    /* Generate an XLSX file */
+    XLSX.writeFile(wb, "lyrics.xlsx");
+  };
+
   return (
     <div className="lyrics-side-actions">
       <button onClick={props.onRefresh}>
@@ -85,7 +107,7 @@ const LyricsSideActions = (props) => {
           <p>Clear Lyrics</p>
         </div>
       </button>
-      <button>
+      <button onClick={handleBackup}>
         <div className="lyrics-side-action-content">
           <svg
             xmlns="http://www.w3.org/2000/svg"

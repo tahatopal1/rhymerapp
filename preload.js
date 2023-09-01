@@ -1,9 +1,17 @@
-const { contextBridge } = require("electron");
+const { contextBridge, ipcRenderer } = require("electron");
 const os = require("os");
 const sqlite3 = require("sqlite3").verbose();
 
+let dbPath;
+
+ipcRenderer.send("request-userDataPath");
+
+ipcRenderer.on("respond-userDataPath", (event, userDataPath) => {
+  dbPath = userDataPath;
+});
+
 const connectDb = async () => {
-  return new sqlite3.Database("./rhymes.db", sqlite3.OPEN_READWRITE, (err) => {
+  return new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       return console.error(err.message);
     }
@@ -32,7 +40,15 @@ contextBridge.exposeInMainWorld("electron", {
   homeDir: () => os.homedir(),
   osVersion: () => os.version(),
   arch: () => os.arch(),
-  queryLyrics: async (key, syllable, endsWith, page, tag, favorite) => {
+  queryLyrics: async (
+    key,
+    syllable,
+    endsWith,
+    page,
+    tag,
+    favorite,
+    offsetting = true
+  ) => {
     const params = [];
     const db = await connectDb();
     let sql = "";
@@ -63,8 +79,10 @@ contextBridge.exposeInMainWorld("electron", {
       sql = sql.concat(` AND favorite = 1`);
     }
 
-    sql = sql.concat(" LIMIT 10 OFFSET ?");
-    params.push(page * 10);
+    if (offsetting) {
+      sql = sql.concat(" LIMIT 10 OFFSET ?");
+      params.push(page * 10);
+    }
 
     let res = await queryAsync(sql, db, params);
 

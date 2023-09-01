@@ -1,12 +1,14 @@
 {
-  "name": "electronapp",
+  "name": "Rhymer",
+  "productName": "Rhymer",
   "version": "0.0.1",
   "description": "Rhyme App",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dev:watch": "npx electronmon --trace-warnings ."
+    "dev:watch": "npx electronmon --trace-warnings .",
+    "package": "electron-packager . rhymerapp --platform=darwin --icon=lyrics.icns --asar"
   },
   "keywords": [
     "electron",
@@ -16,14 +18,27 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^1.2.3",
-    "electron": "^22.0.0",
+    "electron-packager": "^17.1.2",
     "form-data": "^4.0.0",
     "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "electron": "^22.0.0"
   },
   "electronmon": {
     "patterns": [
       "!node_modules/**",
       "!app/node_modules/**"
     ]
+  },
+  "build": {
+    "asar": false,
+    "appId": "rhymerapp",
+    "mac": {
+      "icon": "lyrics.png"
+    },
+    "win": {
+      "icon": "lyrics.png"
+    }
   }
 }

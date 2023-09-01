@@ -1,7 +1,9 @@
 {
-  "name": "app",
+  "name": "Rhymer",
   "version": "0.1.0",
+  "description": "Rhyme App",
   "private": true,
+  "author": "Taha Topal",
   "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

@@ -1,19 +1,22 @@
-const { app, BrowserWindow } = require("electron");
+const { Menu, app, BrowserWindow, ipcMain } = require("electron");
 const url = require("url");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
 
+const userDataPath = app.getPath("userData");
+const dbPath = path.join(userDataPath, "rhymes.db");
+
+ipcMain.on("request-userDataPath", (event) => {
+  event.reply("respond-userDataPath", dbPath);
+});
+
 const connectDb = async () => {
-  const db = new sqlite3.Database(
-    "./rhymes.db",
-    sqlite3.OPEN_READWRITE,
-    (err) => {
-      if (err) {
-        return console.error(err.message);
-      }
+  const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      return console.error(err.message);
     }
-  );
+  });
   return db;
 };
 
@@ -27,7 +30,7 @@ function runAsync(sql, db) {
 }
 
 const createDBFile = async () => {
-  fs.writeFile("rhymes.db", "", (err) => {
+  fs.writeFile(dbPath, "", (err) => {
     if (err) {
       console.error("Error writing file:", err);
     } else {
@@ -37,7 +40,8 @@ const createDBFile = async () => {
 };
 
 const createDB = async () => {
-  const dbPath = path.join(__dirname, "rhymes.db");
+  const userDataPath = app.getPath("userData");
+  const dbPath = path.join(userDataPath, "rhymes.db");
   if (!fs.existsSync(dbPath)) {
     try {
       await createDBFile();
@@ -84,7 +88,25 @@ async function createMainWindow() {
     },
   });
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
+  const menuTemplate = [
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "Quit",
+          click() {
+            app.quit();
+          },
+        },
+      ],
+    },
+    // remove or comment out the section that enables the Developer Tools
+  ];
+
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+
   await createDB();
 
   const startUrl = url.format({
@@ -92,8 +114,8 @@ async function createMainWindow() {
     protocol: "file",
   });
 
-  // mainWindow.loadURL(startUrl);
-  mainWindow.loadURL("http://localhost:3000");
+  mainWindow.loadURL(startUrl);
+  //mainWindow.loadURL("http://localhost:3000");
 }
 
 app.whenReady().then(createMainWindow);
