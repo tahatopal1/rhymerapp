@@ -96,27 +96,34 @@ contextBridge.exposeInMainWorld("electron", {
 
     return res;
   },
-  insertLyric: async (sentence, syllable, tagNames) => {
-    const db = await connectDb();
+  insertLyric: async (sentence, syllable, tagNames, isFavorite = 0) => {
+    try {
+      const db = await connectDb();
 
-    const savedID = await runAsync(
-      `INSERT INTO lyrics(sentence, syllable, favorite) VALUES (?, ?, ?)`,
-      db,
-      [sentence, syllable, 0]
-    );
+      const savedID = await runAsync(
+        `INSERT INTO lyrics(sentence, syllable, favorite) VALUES (?, ?, ?)`,
+        db,
+        [sentence, syllable, isFavorite ? 1 : 0]
+      );
 
-    let placeholders = tagNames.map(() => "?").join(",");
-    let sql = `SELECT * FROM tags WHERE tagname IN (${placeholders})`;
+      if (tagNames) {
+        let placeholders = tagNames.map(() => "?").join(",");
+        let sql = `SELECT * FROM tags WHERE tagname IN (${placeholders})`;
 
-    const tags = await queryAsync(sql, db, tagNames);
-    const tagIds = tags.map((tag) => tag.id);
+        const tags = await queryAsync(sql, db, tagNames);
+        const tagIds = tags.map((tag) => tag.id);
 
-    tagIds.forEach((tagId) => {
-      runAsync(`INSERT INTO lyrics_tags(lyrics_id, tag_id) VALUES (?,?)`, db, [
-        savedID,
-        tagId,
-      ]);
-    });
+        tagIds.forEach((tagId) => {
+          runAsync(
+            `INSERT INTO lyrics_tags(lyrics_id, tag_id) VALUES (?,?)`,
+            db,
+            [savedID, tagId]
+          );
+        });
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   },
   updateLyric: async (id, sentence, syllable, tagNames) => {
     const db = await connectDb();

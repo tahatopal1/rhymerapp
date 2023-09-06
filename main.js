@@ -49,7 +49,7 @@ const createDB = async () => {
       const db = await connectDb();
 
       await runAsync(
-        `CREATE TABLE IF NOT EXISTS lyrics(id INTEGER PRIMARY KEY, sentence TEXT, syllable INTEGER, favorite INTEGER);`,
+        `CREATE TABLE IF NOT EXISTS lyrics(id INTEGER PRIMARY KEY, sentence TEXT UNIQUE, syllable INTEGER, favorite INTEGER);`,
         db
       );
       await runAsync(
@@ -88,7 +88,7 @@ async function createMainWindow() {
     },
   });
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   const menuTemplate = [
     {
       label: "File",
@@ -114,8 +114,8 @@ async function createMainWindow() {
     protocol: "file",
   });
 
-  mainWindow.loadURL(startUrl);
-  //mainWindow.loadURL("http://localhost:3000");
+  // mainWindow.loadURL(startUrl);
+  mainWindow.loadURL("http://localhost:3000");
 }
 
 app.whenReady().then(createMainWindow);

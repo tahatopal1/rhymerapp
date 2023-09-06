@@ -48,7 +48,9 @@ const LyricsSideActions = (props) => {
             await electron.insertLyric(
               element[0],
               element[1],
-              element[2].replaceAll(" ", "").toLowerCase().split(",")
+              element[2] &&
+                element[2].replaceAll(" ", "").toLowerCase().split(","),
+              element[3] ? 1 : 0
             );
           }
         }
@@ -70,13 +72,14 @@ const LyricsSideActions = (props) => {
       sentence: res.sentence,
       syllable: res.syllable,
       tags: res.tags.join(","),
+      favorite: res.favorite,
     }));
 
     const wb = XLSX.utils.book_new();
 
     /* Create a worksheet */
     const ws = XLSX.utils.json_to_sheet(responseDerived, {
-      header: ["sentence", "syllable", "tags"], // Specify the headers if you want
+      header: ["sentence", "syllable", "tags", "favorite"], // Specify the headers if you want
     });
 
     /* Add the worksheet to the workbook */
